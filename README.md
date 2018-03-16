@@ -13,37 +13,51 @@ We tested our project on the following environment.
 * ROS Indigo
 * Numpy
 * OpenCV-Python 2.4.8
-
-How to configure Gazebo world for line follower:
-clone followbot folder into your_workspace/src. For test 
-```
-cd your_workspace/src
-roslaunch followbot course.launch
-```
-In our case, saving followbot files in a src/package didn't work. 
+ 
 
 How to configure Joy:
 http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
 
 ## How to run 
-### Collect Camera Images
-Run the following to record images into the imageFolder of your current directory.
+### Collect map 
+Run the following to change the gmapping parameters to different values. These adjustments changes how far the robot rotates and moves before a new scan is considered for inclusion in the map. It also adjusts the number of beams to skip when processing each laser scan message, and the extent of the map dimensions.
 ```
-mkdir imageFolder
-cd imageFolder
-rosbag record camera/rgb/image_raw --limit=60 -o bagFileName 
-```
-limit = 60 is the total number of frames collected.
-Initialize joystick or remote keyboard teleop before to maneuver the robot and record.
+roscd turtlebot_navigation/launch
+cp gmapping_demo.launch ~/copyDestinationName
+roscd turtlebot_navigation/launch/includes/gmapping
+cp gmapping.launch.xml
+roslaunch folderName gmapping_demo.launch
 
-Run the following to extract raw ROS bag files into JPEG.
-```
-rosrun packageName rosbag_play.py bagFileName.bag /Folderlocation/ camera/rgb/image_raw
-```
+<param name="lskip" value="10"/>
+<param name="linearUpdate" value="0.1"/>
+<param name="angularUpdate" value="0.1"/>
+<param name="xmin" value="-10.0"/>
+<param name="ymin" value="-10.0"/>
+<param name="xmax" value="10.0"/>
+<param name="ymax" value="-10.0"/>
 
-### Perspective Calibration
+```
+Run the following to record, save and display map image. 
+```
+roslaunch turtlebot_bringup minimal.launch
+roslaunch gmappingSavedFolderName gmapping_demo.launch
+roslaunch turtlebot_rviz_launchers view_navigation.launch
+rosrun map_server map_saver -f /destinationFolderName/MapName
+roscd folderMapSaved 
+rosrun rviz rviz
 
-The perpective transform turns the input image into a top view image so that the lines on either side is more separable. We can run pers_calibration.py and it needs 4 coordinates to be transformed into 4 target locations and passes it to getPerspectiveTransform() function in opencv. It will then return a homography matrix which we multiply our image with to transform all the input images to get the birds eye view of the track.
+```
+At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. Furthermore, GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. One method to overcome this is to always drive a new path. Therefore, we made a new map of just the north end of the second floor. 
+
+<div align="center">
+  <img src ="img_src/map1.png" width ="200"> 
+</div>
+
+
+
+### Localization and Navigation
+
+
 
 <div align="center">
   <img src ="img_src/im5.png" width ="200"> <img src ="img_src/im5_pers.jpeg" width ="200"> <img src ="img_src/im4.png" width ="200"> <img src ="img_src/im4_pers.jpeg" width ="200">
@@ -53,39 +67,8 @@ The perpective transform turns the input image into a top view image so that the
 </div>
 
 
-### Line/Lane (yellow or white) Following Robot
-#### In Turtlebot Gazebo Simulation 
-```
-roslaunch followbot course.launch
-cd catkin_ws
-source devel/setup.bash
-chmod +x fileName.py
-catkin_make
-rosrun packageName white_yellow_line_follower_sim.py
-#Or run this for lane following
-rosrun packageName white_yellow_lane_follower_sim.py 
-```
-#### In Kobuki Turtlebot
-```
-roslaunch turtlebot_bringup minimal.launch
-roslaunch turtlebot_bringup 3dsensor.launch
-roslaunch turtlebot_teleop logitech.launch 
-```
+#### Improvement
 
-If joystick appears on js1 other than js0:
-```
-ls -l /dev/input/js1
-roslaunch packageName joy.launch #refer joy.launch in project files
-```
-```
-cd catkin_ws
-source devel/setup.bash
-chmod +x fileName.py
-catkin_make
-rosrun packageName white_yellow_line_follower_sim.py
-#Or run this for lane following
-rosrun packageName white_yellow_lane_follower_sim.py 
-```
 
 ## Project Description
 The steps for Lane Following are as follows:
