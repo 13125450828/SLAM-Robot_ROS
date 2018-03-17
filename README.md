@@ -20,7 +20,7 @@ http://wiki.ros.org/joy/Tutorials/ConfiguringALinuxJoystick
 
 ## How to run 
 ### Collect map 
-Run the following to change the gmapping parameters to different values. These adjustments changes how far the robot rotates and moves before a new scan is considered for inclusion in the map. It also adjusts the number of beams to skip when processing each laser scan message, and the extent of the map dimensions.
+Run the following to change the gmapping parameters to different values. These adjustments changes how far the robot rotates and moves before a new scan is considered for inclusion in the map. It also adjusts the number of beams to skip when processing each laser scan message, and the extent of the map dimensions. The following change in parameters yielded good map results.
 ```
 roscd turtlebot_navigation/launch
 cp gmapping_demo.launch ~/copyDestinationName
@@ -47,13 +47,15 @@ roscd folderMapSaved
 rosrun rviz rviz
 
 ```
-At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. Furthermore, GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. One method to overcome this is to always drive a new path. Therefore, we made a new map of just the north end of the second floor. 
+At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. Furthermore, GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. One method to overcome this is to always drive a new path. Therefore, we made a new map of just the north end of the second floor. We also manually removed some noises and corrected the edges from the map using GIMP. 
 
 <div align="center">
-  <img src ="img_src/map1.png" width ="200"> 
+  <img src ="img_src/map1.pgm" width ="200"> 
 </div>
 
-
+<div align="center">
+  <img src ="img_src/map2.pgm" width ="200"> 
+</div>
 
 ### Localization and Navigation
 
