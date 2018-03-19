@@ -63,6 +63,9 @@ roslaunch turtlebot_navigation amcl_demo.launch map_file:=/locationMapFile/mapNa
 rostopic echo amcl_pose
 
 ```
+<div align="center">
+  <img src ="img_src/map3.pnp" width ="200"> 
+</div>
 
 ## Improvement
 We adjusted the linear and angular speed by adjusting the move base launch file. We also refined all the edges in the map to ensure there are enough distinguishing features for the AMCL module to accurately determine the robot's pose. 
@@ -72,7 +75,7 @@ We did two trial videos after the competition. The difference between the videos
 
 ## Performance Video
 <div align="center">
-  <a href="https://www.youtube.comVIDEO HERE"><img src="https://img.youtube.com/vi/YSfXsihIQsc/0.jpg" alt="IMAGE ALT TEXT"></a>
+  <a href="https://www.youtube.comVIDEO HERE"><img src="https://img.youtube.comVIDEOHERE.jpg" alt="IMAGE ALT TEXT"></a>
 </div>
 
 ## Discussion
