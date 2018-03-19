@@ -6,7 +6,6 @@ The robot builds a map of the environment and moves along a four corner loop wit
 
 
 ## Dependencies
-
 We tested our project on the following environment.
 * Ubuntu 14.04
 * Python 2.7.6
@@ -47,7 +46,7 @@ roscd folderMapSaved
 rosrun rviz rviz
 
 ```
-At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. Furthermore, GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. One method to overcome this is to always drive a new path. Therefore, we made a new map of just the north end of the second floor. We also manually removed some noises and corrected the edges from the map using GIMP. 
+At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. This is because GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. Therefore, we made a new map of just the north end of the second floor. We also manually removed some noises and corrected the edges from the map using GIMP. 
 
 <div align="center">
   <img src ="img_src/map1.pgm" width ="200"> 
@@ -58,42 +57,21 @@ At first we thought of cropping the north end of the map from our last demo as o
 </div>
 
 ### Localization and Navigation
+We teleoperated the robot, and subscribed to the /amcl_pose topic to determine the position and orientation of the robot at the 4 corners of the map. Then based on the floor grid, we determined that each square corresponded to a distance of 1.6 in the map. This is also how we deteremined to set the waypoint coordinates in our code for the robot to navigate to in the map. But before the robot can navigate, it needs to first localize its position in the map. This initial pose can be set using the global localization with rosservice call, or locally using the 2D pose estimate in RVIZ. The 2D pose estimate method was used as it is a faster method for the robot to guess its initial location, and prevents the situation where initial localization fails. Therefore, using the 2D pose estimate, we manually set the initial pose (which can be anywhere in the map) as accurately as possible to its actual location in RVIZ. 
+After setting the waypoints and initial pose, the amcl algorithm performs the localization and navigation. AMCL uses a particle filter, a laser scan and the map created to compare the data from the sensor with the map to determine its location in the real world. If the coordinates from the real world and the map are closely matched, it increases the probability of the pose at that location, so the pose is used to plan the path. Therefore, the pose that is used to plan the path is the one with the highest probability. 
 
+Run the following to start localization and navigation.
+```
+roslaunch turtlebot_navigation amcl_demo.launch map_file:=/locationMapFile/mapName.yaml
+rostopic echo amcl_pose
 
-
-<div align="center">
-  <img src ="img_src/im5.png" width ="200"> <img src ="img_src/im5_pers.jpeg" width ="200"> <img src ="img_src/im4.png" width ="200"> <img src ="img_src/im4_pers.jpeg" width ="200">
-</div>
-<div align="center">
-  <img src ="img_src/im3.png" width ="200"> <img src ="img_src/im3_pers.jpeg" width ="200"> <img src ="img_src/im3.png" width ="200"> <img src ="img_src/im3_pers.jpeg" width ="200">
-</div>
-
+```
 
 #### Improvement
+We adjusted the linear and angular speed by adjusting the move base launch file. We also refined all the edges in the map to ensure there are enough distinguishing features for the AMCL module to accurately determine the robot's pose. 
 
-
-## Project Description
-The steps for Lane Following are as follows:
-* Convert input image into desired perspective transformation
-* Convert into Grayscale(for detecting white) and HSV(for yellow)
-* Form a mask with binary threshold to extract ROI for white or yellow line
-* Apply morphological operator to get rid of noise
-* Crop and extract a rectangular region as ROI.
-* Find the moment of the region
-* Declare robot location as an offset from the point of moment (we followed the right line, so offset was a distance on the left of the moment)
-* Calculate error based on differnce between half the image width and robot's location.
-* Run PD over the error to get angular z with a constant linear velocity x
-* Repeat all the steps
-
-For line following we can find the error with the moment directly.
-
-<div align="center">
-  <img src ="img_src/im1.png" width ="200"> <img src ="img_src/im1_pers.jpeg" width ="200"> <img src ="img_src/im1_gray.jpeg" width ="200"> <img src ="img_src/im1_hsv.jpeg" width ="200">
-</div>
-<div align="center">
-  <img src ="img_src/im1_binary.jpeg" width ="200"> <img src ="img_src/im1_morph.jpeg" width ="200"> <img src ="img_src/im1_ROI.jpeg" width ="200"> <img src ="img_src/im1_ROIcirc.jpeg" width ="200">
-</div>
-
+## Trials after the competition
+We did two trial videos after the competition. The difference between the videos is in the pylon position. This shows the robot is able to navigate to different waypoints. 
 
 ## Performance Video
 <div align="center">
@@ -102,15 +80,12 @@ For line following we can find the error with the moment directly.
 <div align="center">
   <a href="https://www.youtube.com/watch?v=-dGZnNCPr4A"><img src="https://img.youtube.com/vi/-dGZnNCPr4A/0.jpg" alt="IMAGE ALT TEXT"></a>
 </div>
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=XfeCy8dq6mw"><img src="https://img.youtube.com/vi/XfeCy8dq6mw/0.jpg" alt="IMAGE ALT TEXT"></a>
-</div>
 
 ## Discussion
-If the robot somehow turns towards the left line , it follows the track in backward direction. Sometimes it misses the line on a very sharp turn as it vanishes from the robot's view. The method also relies on the camera setting and also prone to lighting conditions where the thresholds require tuning. Our finish time on the track was 24 seconds (see video below). It also had a penalty as per the competition rule when the robot body went outside the track at a sharp corner.
+
 
 ## Future Work
-Variable linear motion can be used instead of fixed linear motion which will help in turning. Also path planning ahead of the turn might help reduce the the linear speed and adjust turning speed for smoother motion.
+
 
 ## Authors
 
