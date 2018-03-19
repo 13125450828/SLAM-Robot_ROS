@@ -58,7 +58,6 @@ Run the following to start localization and navigation.
 ```
 roslaunch turtlebot_navigation amcl_demo.launch map_file:=/locationMapFile/mapName.yaml
 rostopic echo amcl_pose
-
 ```
 <div align="center">
   <img src ="img_src/map3.png" width ="300"> 
