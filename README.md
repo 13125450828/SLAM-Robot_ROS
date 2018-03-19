@@ -49,7 +49,7 @@ rosrun rviz rviz
 At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. This is because GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. Therefore, we made a new map of just the north end of the second floor. We also manually removed some noises and corrected the edges from the map using GIMP. 
 
 <div align="center">
-  <img src ="img_src/map1.png" width ="400"> <img src ="img_src/map2.png" width ="200"> 
+  <img src ="img_src/map1.png" width ="700"> <img src ="img_src/map2.png" width ="200"> 
 </div>
 
 ### Localization and Navigation
@@ -63,7 +63,7 @@ rostopic echo amcl_pose
 
 ```
 <div align="center">
-  <img src ="img_src/map3.png" width ="200"> 
+  <img src ="img_src/map3.png" width ="300"> 
 </div>
 
 ## Improvement
