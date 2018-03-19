@@ -34,7 +34,6 @@ roslaunch folderName gmapping_demo.launch
 <param name="ymin" value="-10.0"/>
 <param name="xmax" value="10.0"/>
 <param name="ymax" value="-10.0"/>
-
 ```
 Run the following to record, save and display map image. 
 ```
@@ -44,7 +43,6 @@ roslaunch turtlebot_rviz_launchers view_navigation.launch
 rosrun map_server map_saver -f /destinationFolderName/MapName
 roscd folderMapSaved 
 rosrun rviz rviz
-
 ```
 At first we thought of cropping the north end of the map from our last demo as our new map for the competition. However, the quality of the north end area of the map is poor even if we tried to edit the image. This is because GMapping takes sensor data (laser scan and odometry) as input, and continuously computes the map as the robot moves around. Because the sensor data is subject to noise, the map will be inaccurate. Sometimes the error is very large thus make the map unusable. Therefore, we made a new map of just the north end of the second floor. We also manually removed some noises and corrected the edges from the map using GIMP. 
 
