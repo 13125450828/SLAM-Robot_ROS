@@ -50,9 +50,6 @@ At first we thought of cropping the north end of the map from our last demo as o
 
 <div align="center">
   <img src ="img_src/map1.pgm" width ="200"> 
-</div>
-
-<div align="center">
   <img src ="img_src/map2.pgm" width ="200"> 
 </div>
 
@@ -67,7 +64,7 @@ rostopic echo amcl_pose
 
 ```
 
-#### Improvement
+## Improvement
 We adjusted the linear and angular speed by adjusting the move base launch file. We also refined all the edges in the map to ensure there are enough distinguishing features for the AMCL module to accurately determine the robot's pose. 
 
 ## Trials after the competition
@@ -75,10 +72,7 @@ We did two trial videos after the competition. The difference between the videos
 
 ## Performance Video
 <div align="center">
-  <a href="https://www.youtube.com/watch?v=YSfXsihIQsc"><img src="https://img.youtube.com/vi/YSfXsihIQsc/0.jpg" alt="IMAGE ALT TEXT"></a>
-</div>
-<div align="center">
-  <a href="https://www.youtube.com/watch?v=-dGZnNCPr4A"><img src="https://img.youtube.com/vi/-dGZnNCPr4A/0.jpg" alt="IMAGE ALT TEXT"></a>
+  <a href="https://www.youtube.comVIDEO HERE"><img src="https://img.youtube.com/vi/YSfXsihIQsc/0.jpg" alt="IMAGE ALT TEXT"></a>
 </div>
 
 ## Discussion
