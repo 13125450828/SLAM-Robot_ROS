@@ -66,8 +66,8 @@ rostopic echo amcl_pose
 ## Improvement
 We adjusted the linear and angular speed by adjusting the move base launch file. We also refined all the edges in the map to ensure there are enough distinguishing features for the AMCL module to accurately determine the robot's pose. 
 
-## Trials after the competition
-We did two trial videos after the competition. The difference between the videos is in the pylon position. This shows the robot is able to navigate to different waypoints. 
+## Trial after the competition
+The video below shows the trial after the competition. We re-calibrated the goal positions and completed the race. 
 
 ## Performance Video
 <div align="center">
