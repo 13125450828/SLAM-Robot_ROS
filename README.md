@@ -71,14 +71,16 @@ We did two trial videos after the competition. The difference between the videos
 
 ## Performance Video
 <div align="center">
-  <a href="https://www.youtube.comVIDEO HERE"><img src="https://img.youtube.comVIDEOHERE.jpg" alt="IMAGE ALT TEXT"></a>
+  <a href="https://www.youtube.com/watch?v=swXw8rr6-7I"><img src="https://img.youtube.com/vi/swXw8rr6-7I/0.jpg" alt="IMAGE ALT TEXT"></a>
 </div>
 
 ## Discussion
-
+The amcl mapping looses its localization if there are too many obstacles in the map.We have found that cleaning the map helps in the path planning.Usually the paths are in between 2 obstacle onboth sides.So if there is any wall type object in the map as noise,it generates curve path insetead of possible linear one.Changing the speed also effects the localization especially moving in free space without suffficient landmarks as it effects robots kinematics with respect to the map.The robot can be lost if its in the middle of free space and finds no landmarks around.
 
 ## Future Work
+Using the vision information to avoid the cones might help.The cones are visible in depth sensor. Using this info, dynamic path locations can be generated instead of predefined fixed path.When amcl looses track, the robot can initiate wander behavior until it reaches any wall around and the amcl will be able to localize with respect to the landmarks present in it.
 
+Using 3D visual SLAM will enhance the robustness of system for the task given above.
 
 ## Authors
 
