@@ -85,7 +85,7 @@ Using 3D visual SLAM will enhance the robustness of system for the task given ab
 ## Authors
 
 * [Nazmus Sakib](https://github.com/nsa31)
-* **Vivian Ting**
+* [Vivian Ting](https://github.com/jtuoa)
 ## Acknowledgement 
 
 * [Programming Robots with ROS](https://github.com/osrf/rosbook/blob/master)
